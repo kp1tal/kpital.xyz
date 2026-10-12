@@ -71,6 +71,9 @@ const footer = (site) => `<footer class="bottom">
   <p><span class="path">~/${esc(site.name)} $</span> ${esc(site.footer ?? site.name)}<span class="cursor" aria-hidden="true">_</span></p>
 </footer>`;
 
+// link de canto pro subsite fuckit
+const cornerLink = `<a class="corner-fuckit" href="https://fuckit.kpital.xyz">fuckit</a>`;
+
 // cabeçalho da home e do ~/setup: banner, tagline e a navegação entre os dois
 const NAV = [['', '~/kpital'], ['setup/', '~/setup']];
 
@@ -163,6 +166,7 @@ export function homePage({ site, articles, tracks, root }) {
 <body class="home">
 
 <div class="overlay"></div>
+${cornerLink}
 
 ${hero(site, root, '')}
 <h1 class="visually-hidden">${esc(site.name)}</h1>
@@ -251,6 +255,7 @@ export function articlePage({ site, article: a, newer, older, root }) {
 <body class="reading">
 
 <div class="overlay"></div>
+${cornerLink}
 
 <nav class="bar" aria-label="navegação">
   <a class="back" href="${root}">← ${esc(site.name)}</a>
@@ -316,6 +321,7 @@ export function setupPage({ site, setup, root }) {
 <body class="home">
 
 <div class="overlay"></div>
+${cornerLink}
 
 ${hero(site, root, 'setup/')}
 
