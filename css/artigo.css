@@ -1,0 +1,684 @@
+/* Página de artigo. Carregada depois de style.css, que já traz fonte, cores,
+   fundo e rodapé. Aqui a página rola normalmente: uma coluna de leitura no
+   centro, sem as alas da home — durante a leitura elas só distrairiam. */
+
+body.reading {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── barra do topo: sempre à mão pra voltar ────────────────────────────── */
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem var(--gutter);
+  border-bottom: 1px solid var(--line);
+  background: rgba(14, 18, 10, 0.82);
+  backdrop-filter: blur(8px);
+}
+
+.back {
+  color: var(--wood-hi);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.back:hover {
+  color: var(--fg);
+}
+
+.bar-path {
+  font-size: 0.75rem;
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── coluna de leitura ─────────────────────────────────────────────────── */
+
+.reader {
+  flex: 1;
+  padding: clamp(1.25rem, 4vw, 3rem) clamp(0.75rem, 3vw, 2rem) clamp(2rem, 6vw, 4rem);
+}
+
+.reader > article {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 3.25rem);
+  border: 1px solid rgba(239, 230, 210, 0.08);
+  border-radius: 3px;
+  background: rgba(14, 17, 10, 0.88);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.article-head {
+  padding-bottom: 1.75rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.article-head .article-meta {
+  font-size: 0.8125rem;
+  color: var(--dim);
+}
+
+.article-h1 {
+  margin-top: 0.75rem;
+  font-size: clamp(1.75rem, 4.5vw, 2.625rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--wood-hi);
+  overflow-wrap: break-word;
+}
+
+.article-lede {
+  margin-top: 0.9rem;
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.6;
+  color: var(--dim);
+}
+
+.article-author {
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--moss);
+}
+
+.article-cover {
+  margin: -0.5rem 0 2.25rem;
+}
+
+.article-cover img {
+  display: block;
+  width: 100%;
+  max-height: 24rem;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid rgba(239, 230, 210, 0.1);
+}
+
+/* ── corpo do texto ────────────────────────────────────────────────────── */
+
+.prose {
+  font-size: 1rem;
+  line-height: 1.75;
+  overflow-wrap: break-word;
+}
+
+.prose > * + * {
+  margin-top: 1.25rem;
+}
+
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  position: relative;
+  line-height: 1.3;
+  scroll-margin-top: 4.5rem;
+}
+
+.prose h2 {
+  margin-top: 3rem;
+  font-size: 1.375rem;
+  color: var(--wood-hi);
+}
+
+.prose h3 {
+  margin-top: 2.25rem;
+  font-size: 1.125rem;
+}
+
+.prose h4,
+.prose h5,
+.prose h6 {
+  margin-top: 1.75rem;
+  font-size: 1rem;
+  color: var(--moss);
+}
+
+.prose .anchor {
+  position: absolute;
+  right: 100%;
+  padding-right: 0.4em;
+  color: var(--wood-deep);
+  text-decoration: none;
+  opacity: 0;
+}
+
+.prose :is(h2, h3, h4, h5, h6):hover .anchor {
+  opacity: 1;
+}
+
+.prose a {
+  color: var(--wood-hi);
+  text-decoration: underline;
+  text-decoration-color: rgba(232, 190, 98, 0.4);
+  text-underline-offset: 0.2em;
+}
+
+.prose a:hover {
+  text-decoration-color: var(--wood-hi);
+}
+
+.prose strong {
+  color: #fff6e3;
+}
+
+.prose mark {
+  background: rgba(232, 190, 98, 0.24);
+  color: var(--fg);
+  padding: 0 0.15em;
+  border-radius: 2px;
+}
+
+.prose :not(pre) > code {
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  background: rgba(200, 154, 75, 0.14);
+  color: #f3d79a;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.5rem;
+}
+
+.prose li + li,
+.prose li > ul,
+.prose li > ol {
+  margin-top: 0.35rem;
+}
+
+.prose ul li::marker {
+  content: "- ";
+  color: var(--wood);
+}
+
+.prose ol li::marker {
+  color: var(--wood);
+}
+
+/* lista de tarefas: [x] / [ ] */
+.prose li:has(> input[type="checkbox"]) {
+  list-style: none;
+  margin-left: -1.5rem;
+}
+
+.prose li:has(> input[type="checkbox"])::marker {
+  content: "";
+}
+
+.prose input[type="checkbox"] {
+  appearance: none;
+  display: inline-grid;
+  place-content: center;
+  width: 0.95em;
+  height: 0.95em;
+  margin-right: 0.6em;
+  vertical-align: -0.1em;
+  border: 1px solid var(--wood);
+  border-radius: 2px;
+}
+
+.prose input[type="checkbox"]:checked {
+  background: var(--wood);
+}
+
+.prose input[type="checkbox"]:checked::after {
+  content: "";
+  width: 0.28em;
+  height: 0.5em;
+  margin-top: -0.12em;
+  border: solid var(--night);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.prose li:has(> input:checked) {
+  color: var(--dim);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px dashed var(--line);
+  margin: 2.5rem 0;
+}
+
+.prose blockquote {
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 2px solid var(--wood-deep);
+  color: var(--dim);
+  font-style: italic;
+}
+
+.prose blockquote > * + * {
+  margin-top: 0.75rem;
+}
+
+.wikilink-missing {
+  color: var(--dim);
+  text-decoration: line-through dotted;
+}
+
+.prose details:not(.callout) > summary {
+  cursor: pointer;
+  color: var(--moss);
+}
+
+/* ── imagem, GIF, vídeo ────────────────────────────────────────────────── */
+
+.media {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.media img,
+.media video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 3px;
+  border: 1px solid rgba(239, 230, 210, 0.1);
+}
+
+.media-embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgba(239, 230, 210, 0.1);
+  border-radius: 3px;
+}
+
+.media-audio audio {
+  width: 100%;
+}
+
+.media figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.8125rem;
+  color: var(--dim);
+}
+
+/* ── código ────────────────────────────────────────────────────────────── */
+
+.code {
+  position: relative;
+  border: 1px solid rgba(239, 230, 210, 0.1);
+  border-radius: 3px;
+  background: rgba(7, 9, 5, 0.85);
+}
+
+.code pre {
+  overflow-x: auto;
+  padding: 1rem 1.15rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  font-variant-ligatures: none;
+  tab-size: 4;
+}
+
+.code-lang {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.75rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--wood-deep);
+  pointer-events: none;
+}
+
+.code-copy {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.4rem;
+  padding: 0.15rem 0.55rem;
+  font: inherit;
+  font-size: 0.6875rem;
+  color: var(--fg);
+  background: rgba(21, 26, 16, 0.95);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.code:hover .code-copy,
+.code-copy:focus-visible {
+  opacity: 1;
+}
+
+.code:hover .code-lang {
+  opacity: 0;
+}
+
+/* realce de sintaxe (highlight.js), na paleta da casa */
+.hljs-comment,
+.hljs-quote {
+  color: #7d7a66;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-doctag {
+  color: #e8be62;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-symbol {
+  color: #a8c27f;
+}
+
+.hljs-number,
+.hljs-bullet,
+.hljs-link {
+  color: #e39b5a;
+}
+
+.hljs-title,
+.hljs-title.function_,
+.hljs-section {
+  color: #f0d59b;
+}
+
+.hljs-type,
+.hljs-title.class_,
+.hljs-built_in {
+  color: #8fc0a9;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-params {
+  color: #d8cfb8;
+}
+
+.hljs-meta,
+.hljs-subst {
+  color: #b59f74;
+}
+
+.hljs-deletion {
+  color: #d0644a;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+}
+
+/* ```text: só o fundo escuro, sem rótulo */
+.code-plain {
+  border-color: transparent;
+}
+
+/* ```ascii: arte solta, sem caixa */
+.prose pre.ascii {
+  overflow-x: auto;
+  /* 14px = tamanho nativo do GohuFont, pra arte sair crespa e alinhada */
+  font-family: 'GohuFontUni', var(--mono);
+  font-size: 14px;
+  line-height: 1.15;
+  color: var(--moss);
+  font-variant-ligatures: none;
+  white-space: pre;
+}
+
+/* termo destacado dentro de um bloco ascii ou de texto (vinha entre crases
+   no markdown): some a crase, fica em âmbar pra marcar */
+.prose .ascii .tok,
+.prose .code-plain .tok {
+  color: var(--wood-hi);
+  font-weight: 700;
+}
+
+/* ── tabelas ───────────────────────────────────────────────────────────── */
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.prose th,
+.prose td {
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid rgba(239, 230, 210, 0.08);
+  text-align: left;
+}
+
+.prose th {
+  color: var(--moss);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  border-bottom-color: var(--line);
+}
+
+.prose tbody tr:hover {
+  background: rgba(200, 154, 75, 0.05);
+}
+
+/* ── callouts (> [!tipo]) ──────────────────────────────────────────────── */
+
+.callout {
+  --cc: #8fb7c9;
+  border: 1px solid color-mix(in srgb, var(--cc) 35%, transparent);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--cc) 8%, rgba(7, 9, 5, 0.6));
+}
+
+.callout-abstract { --cc: #7fbfae; }
+.callout-tip { --cc: #e8be62; }
+.callout-success { --cc: #9cb377; }
+.callout-question { --cc: #d9a066; }
+.callout-warning { --cc: #e8913a; }
+.callout-danger { --cc: #e06a4f; }
+.callout-example { --cc: #b9a0d6; }
+.callout-quote { --cc: #a9a68f; }
+
+.callout-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 0.65rem 1rem;
+  font-weight: 700;
+  color: var(--cc);
+}
+
+.callout-mark {
+  font-weight: 400;
+  flex: none;
+}
+
+summary.callout-title {
+  cursor: pointer;
+  list-style: none;
+}
+
+summary.callout-title::-webkit-details-marker {
+  display: none;
+}
+
+summary.callout-title::after {
+  content: "+";
+  margin-left: auto;
+  font-weight: 400;
+}
+
+details.callout[open] > summary.callout-title::after {
+  content: "−";
+}
+
+.callout-body {
+  padding: 0 1rem 0.85rem;
+  font-size: 0.9375rem;
+}
+
+.callout-body:empty {
+  display: none;
+}
+
+.callout-body > * + * {
+  margin-top: 0.75rem;
+}
+
+.callout-body > :first-child {
+  margin-top: 0;
+}
+
+.callout-body .callout,
+.callout-body .code {
+  margin-top: 0.75rem;
+}
+
+/* ── notas de rodapé ───────────────────────────────────────────────────── */
+
+.prose .footnotes {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--line);
+  font-size: 0.875rem;
+  color: var(--dim);
+}
+
+.prose .footnotes .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.prose .footnotes::before {
+  content: "notas";
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--moss);
+}
+
+.prose .footnotes li::marker {
+  content: counter(list-item) ". ";
+}
+
+.prose sup a {
+  text-decoration: none;
+  padding: 0 0.1em;
+}
+
+.prose [data-footnote-backref] {
+  text-decoration: none;
+}
+
+/* ── fim do artigo ─────────────────────────────────────────────────────── */
+
+.article-foot {
+  margin-top: 3rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--line);
+}
+
+.article-tags {
+  font-size: 0.8125rem;
+  margin-bottom: 1.5rem;
+}
+
+.article-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.article-nav a {
+  display: block;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(239, 230, 210, 0.1);
+  border-radius: 3px;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(7, 9, 5, 0.4);
+}
+
+.article-nav a:hover {
+  border-color: rgba(200, 154, 75, 0.5);
+}
+
+.nav-older {
+  text-align: right;
+  grid-column: 2;
+}
+
+.nav-dir {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--dim);
+}
+
+.nav-title {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.article-nav a:hover .nav-title {
+  color: var(--wood-hi);
+}
+
+.back-bottom {
+  display: inline-block;
+  margin-top: 1.75rem;
+  font-size: 0.875rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .code-copy,
+  .code-lang,
+  .prose .anchor {
+    transition: opacity 0.15s ease;
+  }
+}
+
+@media (max-width: 560px) {
+  .article-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-older {
+    grid-column: auto;
+  }
+
+  .prose .anchor {
+    display: none;
+  }
+}

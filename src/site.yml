@@ -1,0 +1,28 @@
+# Configuração geral do site. O build.js lê isto antes de tudo.
+
+name: kpital
+tagline: arquivo pessoal de música, conhecimento e ideias
+
+# URL pública, sem barra no final (ex: https://kpital.exemplo).
+# Vazio = os links de preview (og:image, og:url) saem relativos, o que funciona
+# localmente mas não no Discord/WhatsApp/X. Preencher quando houver domínio.
+url: "https://kpital.xyz"
+
+# Texto do rodapé (aparece depois do prompt ~/kpital $).
+footer: fuck-it since 2019
+
+# Categorias dos artigos. A chave é o que vai no front matter (`category:`),
+# o valor é o nome que aparece no filtro e no card. A ordem aqui é a ordem
+# dos botões de filtro.
+categories:
+  computacao: computação
+  historia: história
+  opiniao: opinião
+
+# Playlists da galeria de música. A chave é o que vai em `playlist:` em cada
+# faixa do musica.yml, o valor é o nome que aparece. A ordem aqui é a ordem
+# das playlists na página; a primeira já vem aberta.
+playlists:
+  post-soviet-nation: POST-SOVIET NATION
+  pai-divorciado: Pai Divorciado
+  tudo-que-e-metal: tudo que é metal

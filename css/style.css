@@ -1,0 +1,1096 @@
+/* ComicShannsMono (a fonte do terminal), em subset: ASCII + Latin-1 +
+   aspas/travessões + setas + Box Drawing + formas geométricas.
+   Licença: ../fonts/COMICSHANNS-LICENSE.md (MIT) */
+@font-face {
+  font-family: 'ComicShannsMono';
+  src: url("../fonts/ComicShannsMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ComicShannsMono';
+  src: url("../fonts/ComicShannsMono-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* GohuFont (bitmap traçado) só para a arte ASCII: os blocos de quadrante e
+   box-drawing encaixam perfeito, o que a ComicShannsMono (fonte comic) não
+   faz — as letras-bloco saíam tortas. Licença: ../fonts/GOHUFONT-LICENSE.txt */
+@font-face {
+  font-family: 'GohuFontUni';
+  src: url("../fonts/GohuFontUni-Subset.woff2") format("woff2");
+  font-display: swap;
+}
+
+/* A ComicShannsMono não tem cirílico. Esses caracteres vêm da Fira Code
+   (o monospace do sistema), declarada com o MESMO nome de família: o
+   navegador só baixa estes arquivos quando a página tem cirílico.
+   Licença: ../fonts/FIRACODE-LICENSE.txt (OFL) */
+@font-face {
+  font-family: 'ComicShannsMono';
+  src: url("../fonts/FiraCode-Cyrillic-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0400-052F, U+2116;
+}
+
+@font-face {
+  font-family: 'ComicShannsMono';
+  src: url("../fonts/FiraCode-Cyrillic-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+  unicode-range: U+0400-052F, U+2116;
+}
+
+:root {
+  /* madeira: do cerne escuro à resina clara */
+  --wood: #c89a4b;
+  --wood-hi: #e8be62;
+  --wood-deep: #6b4a22;
+  /* floresta */
+  --moss: #9cb377;
+  --pine: #2f4a2a;
+  --night: #151a10;
+  /* texto */
+  --fg: #efe6d2;
+  --dim: #bcb69d;
+  --soft: #d6ceb6;   /* texto corrido secundário: resumos */
+  --path: #7d8a5c;   /* ~/ dos rótulos estilo shell */
+  --line: rgba(200, 154, 75, 0.28);
+  --panel: linear-gradient(180deg, rgba(17, 22, 12, 0.78), rgba(11, 14, 8, 0.86));
+  --panel-edge: rgba(200, 154, 75, 0.2);
+  --panel-shadow: 0 1.5rem 3rem -1rem rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(239, 230, 210, 0.05);
+  --mono: 'ComicShannsMono', ui-monospace, 'Fira Code', monospace;
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --pad: clamp(1.25rem, 3vw, 1.75rem); /* recuo interno das caixas */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* sem o "elástico" do fim da página que fazia o rodapé descolar */
+  overscroll-behavior: none;
+  scrollbar-color: var(--wood-deep) transparent;
+}
+
+body {
+  font-family: var(--mono);
+  color: var(--fg);
+  background: var(--night);
+  min-height: 100dvh;
+  line-height: 1.5;
+  overscroll-behavior: none;
+}
+
+/* escurece a foto e puxa pro verde no topo e pro âmbar embaixo, onde ficam
+   as folhas secas — o texto fica legível sem a foto virar um bloco preto */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 85% 75% at 50% 40%, transparent 40%, rgba(6, 9, 4, 0.6) 100%),
+    linear-gradient(180deg, rgba(14, 20, 10, 0.42) 0%, rgba(14, 18, 10, 0.55) 40%, rgba(30, 20, 8, 0.70) 100%),
+    /* âncora à esquerda: a cabana fica no terço esquerdo da foto */
+    url("../img/cabana.jpg") 20% 30% / cover no-repeat;
+  /* a foto fica numa camada fixa própria em vez de background-attachment:
+     fixed no body, que repintava a tela inteira a cada rolagem (e o blur
+     das caixas junto) — era isso que travava a ~/setup, de caixas altas */
+  will-change: transform;
+}
+
+body > :not(.overlay) {
+  position: relative;
+  z-index: 1;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.sep {
+  color: var(--wood-deep);
+  margin: 0 0.15em;
+}
+
+.tag {
+  color: var(--moss);
+  margin-right: 0.6em;
+}
+
+.tag::before {
+  content: "#";
+  color: var(--wood-deep);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--moss);
+  outline-offset: 2px;
+}
+
+/* ── home: uma coluna só, centralizada ─────────────────────────────────────
+   Banner, título, player, playlists, faixas e artigos, um embaixo do outro.
+   A página rola normalmente; o player gruda no topo da tela enquanto a
+   lista passa por baixo dele. */
+
+body.home {
+  --col: 46rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* o rodapé fica no pé da tela mesmo com pouco conteúdo */
+body.home .bottom {
+  margin-top: auto;
+}
+
+/* ── cabeçalho ─────────────────────────────────────────────────────────── */
+
+.top {
+  isolation: isolate;
+  padding: clamp(1.5rem, 5vw, 3rem) var(--gutter) 2rem;
+  text-align: center;
+}
+
+/* sombra difusa atrás do logo, sem caixa: a floresta escurece só ali, e o
+   ASCII deixa de se misturar com os galhos da foto */
+.top::before {
+  content: "";
+  position: absolute;
+  inset: -2rem 0 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 55% 60% at 50% 42%, rgba(7, 11, 5, 0.72), rgba(7, 11, 5, 0.35) 55%, transparent 80%);
+}
+
+/* arte ASCII do banner.png (scripts/banner.py). 150 colunas: a fonte
+   acompanha a largura da tela pra arte nunca quebrar linha */
+.banner {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-family: var(--mono);
+  font-size: min(0.7rem, calc((100vw - 2 * var(--gutter)) / 83));
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-align: left;
+  white-space: pre;
+  /* contorno escuro colado em cada caractere + halo largo */
+  text-shadow:
+    0 1px 1px rgba(5, 9, 3, 0.95),
+    0 0 4px rgba(5, 9, 3, 0.9),
+    0 0 16px rgba(5, 9, 3, 0.7);
+}
+
+/* celular: em vez de encolher a arte de 150 colunas até virar poeira, troca
+   por uma versão de 64 colunas, de caractere grosso */
+.banner-sm {
+  display: none;
+  font-size: min(0.85rem, calc((100vw - 2 * var(--gutter)) / 36));
+}
+
+@media (max-width: 640px) {
+  .banner-lg { display: none; }
+  .banner-sm { display: inline-block; }
+}
+
+.banner i {
+  font-style: normal;
+}
+
+.banner .w { color: var(--wood-hi); }
+.banner .m { color: var(--moss); }
+.banner .b { color: var(--wood-deep); }
+
+
+
+
+.tagline {
+  margin-top: 0.25rem;
+  font-size: clamp(0.8125rem, 1.6vw, 0.9375rem);
+  color: var(--soft);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+/* "# comentário" de shell */
+.comment {
+  color: var(--path);
+}
+
+/* ── coluna central ────────────────────────────────────────────────────── */
+
+.column {
+  display: grid;
+  gap: 1.5rem;
+  width: min(var(--col), 100% - 2 * var(--gutter));
+  margin: 0 auto 2.5rem;
+}
+
+.pane,
+.music {
+  border: 1px solid var(--panel-edge);
+  border-radius: 4px;
+  background: var(--panel);
+  box-shadow: var(--panel-shadow);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.pane {
+  padding: var(--pad);
+}
+
+/* na ~/setup as caixas são altas e cheias de foto: o blur por trás delas
+   pesava na rolagem e quase não aparece com o fundo já 80% opaco */
+.pane.setup {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: linear-gradient(180deg, rgba(17, 22, 12, 0.88), rgba(11, 14, 8, 0.92));
+}
+
+/* rótulo de seção: ~/artigos e ~/playlist usam exatamente o mesmo */
+.pane-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--moss);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+/* traço que corre até o fim da ala, como divisória de painel no terminal */
+.pane-title::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--line);
+  transform: translateY(-0.3em);
+}
+
+.count {
+  color: var(--wood);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.path {
+  color: var(--path);
+  font-weight: 400;
+}
+
+/* ── galeria de música ─────────────────────────────────────────────────────
+   Em cima, as playlists (cards com a tira das primeiras capas). Embaixo, as
+   faixas da playlist marcada, uma por linha. A troca de playlist é o mesmo
+   truque sem JS do filtro de artigos: rádio + :has(). */
+
+.playlists {
+  border: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.playlists input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.playlist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.6rem;
+  border: 1px solid rgba(239, 230, 210, 0.1);
+  border-radius: 3px;
+  background: rgba(10, 13, 7, 0.45);
+  cursor: pointer;
+}
+
+.playlist:hover {
+  border-color: rgba(200, 154, 75, 0.5);
+}
+
+.playlists input:checked + .playlist {
+  border-color: var(--wood);
+  background: rgba(200, 154, 75, 0.12);
+}
+
+.playlists input:focus-visible + .playlist {
+  outline: 2px solid var(--moss);
+  outline-offset: 2px;
+}
+
+.playlist-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.playlist-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.playlists input:checked + .playlist .playlist-name {
+  color: var(--wood-hi);
+}
+
+.playlist-count {
+  margin-top: auto;
+  font-size: 0.6875rem;
+  color: var(--dim);
+}
+
+/* capa: imagem, ou dois tons + veios de madeira quando a faixa não tem */
+.cover {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 2px;
+  background:
+    repeating-linear-gradient(100deg, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 11px),
+    linear-gradient(145deg, var(--c1, var(--wood-deep)), var(--c2, var(--pine)));
+}
+
+.cover img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cover-initials {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(239, 230, 210, 0.85);
+}
+
+.cover-empty {
+  background: rgba(239, 230, 210, 0.05);
+}
+
+/* lista de faixas; o número é um contador CSS, então recomeça em 01 em cada
+   playlist (faixa escondida não conta) */
+.tracks {
+  list-style: none;
+  counter-reset: faixa;
+  display: grid;
+  gap: 2px;
+}
+
+.track {
+  counter-increment: faixa;
+}
+
+.track-row {
+  display: grid;
+  grid-template-columns: 1.5rem 2.75rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.track-row:not(:disabled):hover {
+  background: rgba(239, 230, 210, 0.05);
+}
+
+.track-row:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.track.is-current .track-row {
+  background: rgba(200, 154, 75, 0.1);
+}
+
+.track-num {
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.track-num::before {
+  content: counter(faixa, decimal-leading-zero);
+}
+
+.track-num svg {
+  display: none;
+  width: 0.8rem;
+  height: 0.8rem;
+  fill: currentColor;
+}
+
+/* número vira play no hover; na faixa atual, play ou pause conforme toca */
+.track-row:not(:disabled):hover .track-num::before,
+.track.is-current .track-num::before {
+  content: none;
+}
+
+.track-row:not(:disabled):hover .track-num svg:first-child,
+.track.is-current .track-num svg:first-child {
+  display: block;
+}
+
+.track.is-playing .track-num svg:first-child {
+  display: none;
+}
+
+.track.is-playing .track-num svg:last-child {
+  display: block;
+}
+
+.track-row:not(:disabled):hover .track-num,
+.track.is-current .track-num {
+  color: var(--wood-hi);
+}
+
+.track-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.track-title,
+.track-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.track.is-current .track-title {
+  color: var(--wood-hi);
+}
+
+.track-line {
+  font-size: 0.75rem;
+  color: var(--dim);
+}
+
+.track-year {
+  font-size: 0.75rem;
+  color: var(--wood);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── música: barra compacta, lista recolhida ───────────────────────────────
+   Secundária na página: o player numa faixa só e as playlists dentro de um
+   bloco escondido que o botão [+] ver faixas abre. Aberta, a lista rola por
+   dentro e não empurra os artigos pra longe. */
+
+/* a caixa da música é só o player. O ícone de lista nos controles é o label
+   de um checkbox escondido: abre as faixas sem JS, igual aos filtros */
+.music {
+  padding-block: 1rem;
+}
+
+/* quadrado de cantos arredondados, com borda: se destaca dos outros
+   botões (redondos, sem borda) sem competir com o play. Aberto, fica
+   preenchido como o play. (.player na frente: o .player-btn vem depois
+   no arquivo e tem a mesma especificidade) */
+.player .player-list {
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-left: 0.5rem;
+  border: 1px solid rgba(200, 154, 75, 0.55);
+  border-radius: 6px;
+  color: var(--wood-hi);
+  background: rgba(200, 154, 75, 0.08);
+}
+
+.player .player-list:hover {
+  border-color: var(--wood-hi);
+  background: rgba(200, 154, 75, 0.18);
+}
+
+.music:has(#music-open:checked) .player .player-list {
+  border-color: var(--wood);
+  color: var(--night);
+  background: var(--wood);
+}
+
+.music:has(#music-open:focus-visible) .player-list {
+  outline: 2px solid var(--moss);
+  outline-offset: 2px;
+}
+
+.music-list {
+  display: none;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.music:has(#music-open:checked) .music-list {
+  display: block;
+}
+
+.music-list .playlists {
+  margin: 0 0 0.75rem;
+}
+
+.music-list .tracks {
+  max-height: 20rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 0 -0.6rem;
+  scrollbar-width: thin;
+}
+
+
+
+
+/* ── player ────────────────────────────────────────────────────────────── */
+
+.player {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "art info controls"
+    "art progress progress";
+  align-items: center;
+  gap: 0.4rem 0.85rem;
+}
+
+.player-art {
+  grid-area: art;
+  width: 2.75rem;
+  aspect-ratio: 1;
+  border-radius: 3px;
+  border: 1px solid rgba(239, 230, 210, 0.12);
+  background:
+    repeating-linear-gradient(100deg, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 11px),
+    linear-gradient(145deg, var(--c1, var(--wood-deep)), var(--c2, var(--pine)));
+  background-size: cover;
+  background-position: center;
+}
+
+/* Faixa do YouTube: o vídeo toca escondido atrás da capa, na mesma célula
+   do grid. Pausado, carregando ou até tocando, o YouTube desenha botão de
+   play/pause e logo dentro do vídeo, e isso não sai de lá de dentro — então
+   ele nunca aparece. O mouse e o Tab também não chegam nele: quem controla
+   é o nosso player. */
+.player-video {
+  grid-area: art;
+  position: relative;
+  width: 2.75rem;
+  aspect-ratio: 1;
+  overflow: hidden;
+  display: none;
+}
+
+.player-video iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 160px;
+  height: 90px;
+  border: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.player.is-youtube .player-video {
+  display: block;
+}
+
+.player-art {
+  position: relative;
+  z-index: 1;
+}
+
+.player-info {
+  grid-area: info;
+  min-width: 0;
+}
+
+.player-title,
+.player-artist {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.player-artist {
+  font-size: 0.8125rem;
+  color: var(--dim);
+}
+
+.player[data-state="idle"] .player-title {
+  font-weight: 400;
+  color: var(--dim);
+}
+
+.player-controls {
+  grid-area: controls;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.player-btn {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.player-btn svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+.player-btn:not(:disabled):hover {
+  color: var(--wood-hi);
+}
+
+.player-btn:disabled {
+  color: rgba(239, 230, 210, 0.25);
+  cursor: default;
+}
+
+.player-toggle {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--wood);
+  color: var(--night);
+}
+
+.player-toggle:disabled {
+  background: rgba(200, 154, 75, 0.2);
+  color: rgba(21, 26, 16, 0.6);
+}
+
+.player-toggle:not(:disabled):hover {
+  background: var(--wood-hi);
+  color: var(--night);
+}
+
+/* mostra play ou pause conforme o estado */
+.player-toggle svg:last-child,
+.player[data-state="playing"] .player-toggle svg:first-child {
+  display: none;
+}
+
+.player[data-state="playing"] .player-toggle svg:last-child {
+  display: block;
+}
+
+.player-progress {
+  grid-area: progress;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.player-time {
+  font-size: 0.75rem;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+  min-width: 2.6em;
+}
+
+.player-time:last-child {
+  text-align: right;
+}
+
+.player-seek {
+  flex: 1;
+  height: 1rem;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  --pct: 0%;
+}
+
+.player-seek:disabled {
+  cursor: default;
+}
+
+.player-seek::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--wood) var(--pct), rgba(239, 230, 210, 0.15) var(--pct));
+}
+
+.player-seek::-moz-range-track {
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(239, 230, 210, 0.15);
+}
+
+.player-seek::-moz-range-progress {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--wood);
+}
+
+.player-seek::-webkit-slider-thumb {
+  appearance: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-top: calc(-0.375rem + 1.5px);
+  border-radius: 50%;
+  background: var(--wood-hi);
+  border: 0;
+}
+
+.player-seek::-moz-range-thumb {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: var(--wood-hi);
+  border: 0;
+}
+
+.player-seek:disabled::-webkit-slider-thumb {
+  background: transparent;
+}
+
+.player-seek:disabled::-moz-range-thumb {
+  background: transparent;
+}
+
+/* ── galeria de artigos ────────────────────────────────────────────────── */
+
+.filters {
+  border: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.filters input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.filters label {
+  cursor: pointer;
+  font-size: 0.8125rem;
+  padding: 0.3em 0.8em;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--dim);
+}
+
+.filters label:hover {
+  color: var(--fg);
+  border-color: var(--wood);
+}
+
+.filters input:checked + label {
+  color: var(--night);
+  background: var(--wood);
+  border-color: var(--wood);
+}
+
+.filters input:focus-visible + label {
+  outline: 2px solid var(--moss);
+  outline-offset: 2px;
+}
+
+.articles {
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.article a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(239, 230, 210, 0.08);
+  border-left: 2px solid var(--wood-deep);
+  border-radius: 3px;
+  background: rgba(8, 11, 6, 0.5);
+}
+
+.article a:hover,
+.article a:focus-visible {
+  border-color: rgba(200, 154, 75, 0.45);
+  border-left-color: var(--wood);
+  background: rgba(8, 11, 6, 0.75);
+}
+
+.article-meta {
+  font-size: 0.8125rem;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.article-title {
+  margin-top: 0.35rem;
+  font-size: clamp(1.125rem, 2.4vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.article a:hover .article-title,
+.article a:focus-visible .article-title {
+  color: var(--wood-hi);
+}
+
+.article-desc {
+  margin-top: 0.5rem;
+  max-width: 62ch;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--soft);
+}
+
+.empty {
+  display: none;
+  color: var(--dim);
+  font-size: 0.875rem;
+}
+
+/* ── navegação (home e ~/setup) ───────────────────────────────────────────
+   Abas com fundo próprio: texto solto em cima da foto sumia nos galhos */
+
+.nav {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin-top: 1rem;
+  padding: 0.25rem;
+  border: 1px solid var(--panel-edge);
+  border-radius: 4px;
+  background: rgba(8, 11, 6, 0.82);
+  box-shadow: 0 0.5rem 1.5rem -0.5rem rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.nav a {
+  padding: 0.35em 0.95em;
+  border-radius: 3px;
+  font-size: 0.9375rem;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.nav a:hover {
+  color: var(--wood-hi);
+  background: rgba(239, 230, 210, 0.06);
+}
+
+.nav a[aria-current="page"] {
+  color: var(--night);
+  background: var(--wood);
+  font-weight: 700;
+}
+
+/* ── ~/setup ──────────────────────────────────────────────────────────────
+   Cada bloco: foto + specs no estilo do fastfetch (user@host, uma linha de
+   traços, e chave: valor com a chave colorida). O bloco "wide" põe a foto na
+   largura toda; os outros põem a foto do lado das specs. */
+
+.setup {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.setup-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.setup-wide .setup-body {
+  grid-template-columns: 1fr;
+}
+
+.setup-photo {
+  overflow: hidden;
+  border: 1px solid rgba(239, 230, 210, 0.1);
+  border-radius: 3px;
+  background: rgba(8, 11, 6, 0.6);
+}
+
+.setup-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* vinheta leve: só as bordas escurecem um pouco, o centro fica intacto */
+.setup-vignette .setup-photo {
+  position: relative;
+}
+
+.setup-vignette .setup-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 60%, rgba(9, 12, 7, 0.4) 100%);
+  box-shadow: inset 0 0 1.5rem rgba(9, 12, 7, 0.45);
+}
+
+/* sem foto ainda: um espaço do tamanho certo dizendo onde ela entra */
+.setup-missing {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  padding: 1rem;
+  border: 1px dashed var(--line);
+  font-size: 0.8125rem;
+  color: var(--dim);
+  text-align: center;
+}
+
+.spec-host {
+  font-weight: 700;
+  color: var(--wood-hi);
+}
+
+.spec-rule {
+  color: var(--path);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.specs dl > div {
+  display: grid;
+  grid-template-columns: 8.5em minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.15rem 0;
+  font-size: 0.875rem;
+}
+
+.specs dt {
+  color: var(--moss);
+  font-weight: 700;
+}
+
+.specs dt::after {
+  content: ":";
+  color: var(--path);
+}
+
+.specs dd {
+  color: var(--soft);
+}
+
+/* specs embaixo da foto larga: duas colunas */
+.setup-wide dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 2rem;
+}
+
+@media (max-width: 640px) {
+  .setup-body,
+  .setup-wide dl {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── rodapé ────────────────────────────────────────────────────────────── */
+
+.bottom {
+  padding: 1.25rem var(--gutter) 1.5rem;
+  background: linear-gradient(180deg, transparent, rgba(7, 10, 5, 0.75));
+  font-size: 0.8125rem;
+  color: var(--dim);
+  text-align: center;
+}
+
+.cursor {
+  color: var(--wood);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cursor {
+    animation: blink 1.1s steps(1) infinite;
+  }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .filters label,
+  .article a,
+  .article-title,
+  .playlist,
+  .track-row,
+  .player-btn {
+    transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease, opacity 0.15s ease;
+  }
+}
+
+/* ── celular ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 560px) {
+  .playlists {
+    gap: 0.4rem;
+  }
+
+  .playlist {
+    padding: 0.4rem;
+  }
+
+  .playlist-name {
+    font-size: 0.6875rem;
+  }
+
+  .track-row {
+    grid-template-columns: 1.25rem 2.5rem minmax(0, 1fr) auto;
+    gap: 0.6rem;
+    padding: 0.4rem 0.3rem;
+  }
+}

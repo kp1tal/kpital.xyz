@@ -1,0 +1,39 @@
+# Página ~/setup. Cada item é uma foto + uma lista de especificações, no
+# estilo do fastfetch.
+#
+# Campos:
+#   title:  nome do bloco                                (obrigatório)
+#   host:   linha de cima do bloco, tipo user@host        (opcional)
+#   photo:  arquivo da foto em src/setup/                 (opcional — sem
+#           foto aparece um espaço reservado dizendo onde colocar)
+#   alt:    descrição da foto, pra leitor de tela         (opcional)
+#   wide:   true = foto na largura toda, specs embaixo;
+#           sem isso a foto fica do lado das specs        (opcional)
+#   vignette: true = escurece de leve as bordas da foto   (opcional)
+#   specs:  lista de "chave: valor", na ordem em que aparecem
+#
+# Os valores abaixo foram lidos desta máquina em 2026-10-11 — confira e
+# mude à vontade.
+
+- title: rice
+  host: kpital@arch
+  photo: rice.jpg
+  alt: o workspace 5 no Hyprland, com neovim e o banner do kpital no kitty
+  wide: true
+  specs:
+    - os: Arch Linux
+    - wm: Hyprland 0.56
+    - terminal: kitty
+    - shell: zsh
+
+- title: thinkpad
+  host: kpital@thinkpad
+  photo: thinkpad.jpg
+  alt: o ThinkPad T14 Gen 5 aberto, com o kpital no papel de parede
+  vignette: true
+  specs:
+    - modelo: ThinkPad T14 Gen 5
+    - cpu: Intel Core Ultra 5 135U
+    - gpu: Intel Graphics (Meteor Lake)
+    - ram: 32 GB
+    - tela: 14" 1920x1200

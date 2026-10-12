@@ -1,0 +1,418 @@
+# Faixas da galeria de música, na ordem em que aparecem.
+#
+# Jeito fácil: `npm run musica -- <link do YouTube>` preenche tudo sozinho
+# (título, artista, álbum, ano e capa) e adiciona a faixa no fim desta lista.
+#
+# Campos:
+#   title:   nome da faixa                                 (obrigatório)
+#   artist:  artista                                       (obrigatório)
+#   album:   álbum                                         (opcional)
+#   year:    ano                                           (opcional)
+#   playlist: chave da playlist (lista em src/site.yml)   (obrigatório)
+#   cover:   arquivo da capa em src/musica/                (opcional — sem capa vira um bloco de cor)
+#   youtube: id ou link do vídeo — toca pelo YouTube       (um dos dois, pra faixa tocar)
+#            ou uma lista [id1, id2]: se o 1º for bloqueado, tenta o 2º
+#   audio:   arquivo de áudio em src/musica/               (um dos dois, pra faixa tocar)
+
+- title: "Спокойная ночь"
+  artist: "Кино"
+  album: "Последний герой"
+  year: 1989
+  playlist: post-soviet-nation
+  cover: DiDUIfMk7go.jpg
+  youtube: DiDUIfMk7go
+
+- title: "Память"
+  artist: "Мать Тереза"
+  album: "Иллюзия"
+  year: 2002
+  playlist: post-soviet-nation
+  cover: 5XJgfD5KdPU.jpg
+  youtube: 5XJgfD5KdPU
+
+- title: "Down Under"
+  artist: "Men At Work"
+  album: "Business As Usual"
+  year: 1981
+  playlist: pai-divorciado
+  cover: hfmxO-HQ5rU.jpg
+  # oficial bloqueado fora do YouTube; estes são de canais de letra, todos
+  # conferidos por impressão digital do áudio (0,91–0,93 = mesma gravação)
+  youtube: [EeeBH294v6I, FDD7O8oNoFI, KaBByo0IjCE, J2m1ab304vA, hfmxO-HQ5rU]
+
+- title: "Группа крови"
+  artist: "Кино"
+  album: "Группа крови"
+  year: 1988
+  playlist: post-soviet-nation
+  cover: xtxjm7ciwmc.jpg
+  youtube: xtxjm7ciwmc
+
+- title: "Evenflow"
+  artist: "Pearl Jam"
+  album: "Even Flow"
+  year: 1991
+  playlist: pai-divorciado
+  cover: q90DPCu_-zk.jpg
+  # tkbgtVFlyCQ: a versão escolhida, mas bloqueada fora do YouTube (testado
+  # de 127.0.0.1, out/2026) — fica na frente caso libere no domínio real.
+  # fXPanLnkxss: único upload liberado que é de fato Even Flow (canal de
+  # letra, qualidade fraca). NÃO usar QK5w-3jS6AE: título certo, música errada.
+  youtube: [tkbgtVFlyCQ, fXPanLnkxss, q90DPCu_-zk]
+
+- title: "Man in the Box"
+  artist: "Alice In Chains"
+  album: "Facelift"
+  year: 1990
+  playlist: pai-divorciado
+  cover: H1i5HaQV9ck.jpg
+  # oficial bloqueado; canal de letra conferido por impressão digital (0,91)
+  youtube: [pLtKdBgwLYY, H1i5HaQV9ck]
+
+- title: "Black"
+  artist: "Pearl Jam"
+  album: "Ten"
+  year: 1991
+  playlist: pai-divorciado
+  cover: IpwHB2U3J1s.jpg
+  # bloqueado fora do YouTube; nenhum outro upload liberado em 55 testados (out/2026)
+  youtube: IpwHB2U3J1s
+
+- title: "November Rain"
+  artist: "Guns N' Roses"
+  album: "Use Your Illusion I"
+  year: 1991
+  playlist: pai-divorciado
+  cover: y6lfK3bH4z8.jpg
+  # bloqueado fora do YouTube. NÃO usar CWMYEI81Xmc nem TxJk3Oyo110: não são a
+  # gravação original.
+  youtube: y6lfK3bH4z8
+
+- title: "Spleen Black Metal"
+  artist: "Nocturnal Depression"
+  album: "Spleen Black Metal"
+  year: 2015
+  playlist: tudo-que-e-metal
+  cover: Z-vKyvMW0s4.jpg
+  # bloqueado fora do YouTube; nenhum outro upload liberado em 12 testados (out/2026)
+  youtube: Z-vKyvMW0s4
+
+- title: "Dunkelheit"
+  artist: "Burzum"
+  album: "Filosofem"
+  # o YouTube só informa 2008 (relançamento); o álbum saiu em 1996
+  year: 1996
+  playlist: tudo-que-e-metal
+  cover: -ZENtivAi6I.jpg
+  # bloqueado fora do YouTube; em 34 testados só 1gsV4cmOt9M toca, e é
+  # regravação com vocal em português — NÃO usar (out/2026)
+  youtube: -ZENtivAi6I
+
+- title: "Eufori"
+  artist: "Apati"
+  album: "Eufori MMXVIII"
+  year: 2018
+  playlist: tudo-que-e-metal
+  cover: pJPkctku6BY.jpg
+  # bloqueado fora do YouTube; nenhum outro upload liberado em 15 testados (out/2026)
+  youtube: pJPkctku6BY
+
+- title: "Krätze"
+  artist: "Grausamkeit"
+  album: "Pink Green 666"
+  year: 1997
+  playlist: tudo-que-e-metal
+  cover: IsWXomcmJ5Q.jpg
+  youtube: [IsWXomcmJ5Q, f3NXveeJxGw]
+
+- title: "Weightless Again"
+  artist: "The Handsome Family"
+  album: "Through the Trees"
+  year: 1998
+  playlist: pai-divorciado
+  cover: 5apJERgbYQc.jpg
+  # identificada pelo Spotify (03bb523ftjpUYqoBjTsFG3); 5apJERgbYQc é o upload
+  # do canal oficial da banda, com a duração do álbum
+  youtube: [5apJERgbYQc, td5n-THiUKM, mkdjbk_G6pw]
+
+- title: "Symphony Of Destruction"
+  artist: "Megadeth"
+  album: "Countdown to Extinction"
+  year: 1992
+  playlist: pai-divorciado
+  cover: sp-51TG9W3y9qyO8BY5RXKgnZ.jpg
+  # spotify: 51TG9W3y9qyO8BY5RXKgnZ
+  # wRsnTu1LiN8 é a faixa do álbum (1992 Mix Remaster, canal oficial), bloqueada
+  # fora do YouTube. Dos ~150 uploads testados, 15 tocam e nenhum é a gravação
+  # original: pkZbvV5Nzw0 0,865 (provável áudio do clipe), cgtGdwCnBYY 0,81 (out/2026).
+  youtube: wRsnTu1LiN8
+
+- title: "Boys Don't Cry"
+  artist: "The Cure"
+  album: "Boys Don't Cry"
+  year: 1979
+  playlist: pai-divorciado
+  cover: sp-2RKDbMwtJgKc76H9oPo7Cl.jpg
+  # spotify: 2RKDbMwtJgKc76H9oPo7Cl
+  # o Spotify mostra a coletânea Greatest Hits (2001); o single é de 1979.
+  # bloqueado fora do YouTube: nenhum dos ~100 uploads testados com a duração
+  # original toca (out/2026). NÃO usar iVwkCqKgfEM nem isNztTjXQsQ: são outras
+  # versões (2:40 / 86 Mix). latEhwt1uis é o oficial da gravação original.
+  youtube: latEhwt1uis
+
+- title: "Hangar 18"
+  artist: "Megadeth"
+  album: "Rust in Peace"
+  year: 1990
+  playlist: pai-divorciado
+  cover: sp-6b6uLZsoGhObYexIxnRbIb.jpg
+  # spotify: 6b6uLZsoGhObYexIxnRbIb
+  # bloqueado fora do YouTube; nenhum upload liberado em ~50 testados (out/2026)
+  youtube: x5A9Aa-WU5E
+
+- title: "N.I.B."
+  artist: "Black Sabbath"
+  album: "Black Sabbath"
+  year: 1970
+  playlist: pai-divorciado
+  cover: sp-3XclwoQxz4p6Dl7VUf90KW.jpg
+  # spotify: 3XclwoQxz4p6Dl7VUf90KW
+  youtube: [9kgQQuPZ8K0, -kQFwqpvBF0]
+
+- title: "Send Me An Angel"
+  artist: "Scorpions"
+  album: "Crazy World"
+  year: 1990
+  playlist: pai-divorciado
+  cover: sp-1bKQ48M9onID2kbSpRy8kK.jpg
+  # spotify: 1bKQ48M9onID2kbSpRy8kK
+  # K9RKlz1qpQY é a faixa do álbum (canal oficial), bloqueada fora do YouTube.
+  # Dos ~180 uploads testados, 8 tocam e nenhum é a gravação original
+  # (impressão digital ≤0,66; fB44OLh8tDM e VFo39Vak_2U inclusive) (out/2026).
+  youtube: K9RKlz1qpQY
+
+- title: "Love, Hate, Love"
+  artist: "Alice In Chains"
+  album: "Facelift"
+  year: 1990
+  playlist: pai-divorciado
+  cover: sp-2YolSRrYvFxhTGjbiT33yH.jpg
+  # spotify: 2YolSRrYvFxhTGjbiT33yH
+  # oficial bloqueado; upload legendado conferido por impressão digital (0,96)
+  youtube: jEiU5rC-X3g
+
+- title: "A Tout Le Monde"
+  artist: "Megadeth"
+  album: "Youthanasia"
+  year: 1994
+  playlist: pai-divorciado
+  cover: sp-6olS0TmHmsGr0hXtcBsiVM.jpg
+  # spotify: 6olS0TmHmsGr0hXtcBsiVM
+  # bloqueado fora do YouTube. n9QqkcDRYFw é a faixa do álbum (Remastered 2004,
+  # a mesma do Spotify). NÃO usar iEyOwLY3rV4: é o clipe, outra mixagem.
+  youtube: n9QqkcDRYFw
+
+- title: "Master Of Puppets"
+  artist: "Metallica"
+  album: "Master of Puppets"
+  year: 1986
+  playlist: pai-divorciado
+  cover: sp-2MuWTIM3b0YEAskbeeFE1i.jpg
+  # spotify: 2MuWTIM3b0YEAskbeeFE1i
+  # oficial bloqueado; uploads de letra conferidos por impressão digital (0,94–0,96)
+  youtube: [ZZpatnAO5Vg, 23dcDilmXDI]
+
+- title: "Far From Any Road"
+  artist: "The Handsome Family"
+  album: "Singing Bones"
+  year: 2003
+  playlist: pai-divorciado
+  cover: sp-3LDkLpuxQlEuEiZmkxpr8S.jpg
+  # spotify: 3LDkLpuxQlEuEiZmkxpr8S
+  youtube: [m_vBi-Hg-BU, BqaiPlo6xVo]
+
+- title: "Black Sabbath"
+  artist: "Black Sabbath"
+  album: "Black Sabbath"
+  year: 1970
+  playlist: pai-divorciado
+  cover: sp-6KmJMlyPp0rPR7LloToCaF.jpg
+  # spotify: 6KmJMlyPp0rPR7LloToCaF
+  youtube: [8lsYurpPvDk, PSUM0ijBMkA]
+
+- title: "Losing My Religion"
+  artist: "R.E.M."
+  album: "Out of Time"
+  year: 1991
+  playlist: pai-divorciado
+  cover: sp-31AOj9sFz2gM0O3hMARRBx.jpg
+  # spotify: 31AOj9sFz2gM0O3hMARRBx
+  # bloqueado fora do YouTube. NÃO usar 77qpuS2MZ94 / LXYDPYg5Fxg: não são a
+  # gravação original. xwtdhWltSIg é o clipe oficial.
+  youtube: xwtdhWltSIg
+
+- title: "Crystal Mountain"
+  artist: "Death"
+  album: "Symbolic"
+  year: 1995
+  playlist: tudo-que-e-metal
+  cover: sp-0ItAcLSkUiePOmFGun3cSe.jpg
+  # spotify: 0ItAcLSkUiePOmFGun3cSe
+  # oficial bloqueado; upload não oficial conferido por impressão digital (0,93)
+  youtube: h8g5QsT-RSw
+
+- title: "Nostalgia"
+  artist: "Nocturnal Depression"
+  album: "Deathcade"
+  year: 2017
+  playlist: tudo-que-e-metal
+  cover: sp-6zog3BVAWix1uXRfevBE2u.jpg
+  # spotify: 6zog3BVAWix1uXRfevBE2u
+  youtube: [B47FypVbC4Y, zKMa5UAbpJY]
+
+- title: "Kult of the Cauldron"
+  artist: "Okkult Spell"
+  album: "Okkult Spell"
+  year: 2024
+  playlist: tudo-que-e-metal
+  cover: sp-5GrHqltghDea981tnobI9C.jpg
+  # spotify: 5GrHqltghDea981tnobI9C
+  youtube: QOtiUEi3rGo
+
+- title: "In The Halls And Chambers Of Stardust The Crystallic Heavens Open"
+  artist: "Isengard"
+  album: "Vinterskugge"
+  year: 2002
+  playlist: tudo-que-e-metal
+  cover: sp-4NnktG8oinKZtxGvFJv9A6.jpg
+  # spotify: 4NnktG8oinKZtxGvFJv9A6
+  # bloqueado fora do YouTube; nenhum upload liberado (out/2026)
+  youtube: AIMFf2DlwvE
+
+- title: "иж-412"
+  artist: "radiotehnika"
+  album: "сделано на кухне"
+  year: 2023
+  playlist: post-soviet-nation
+  cover: sp-7Lw34GiADpeIS069iMZ3UI.jpg
+  # spotify: 7Lw34GiADpeIS069iMZ3UI
+  youtube: [jp71hRrrOpg, tB2iMyI8Lqc]
+
+- title: "Против царя"
+  artist: "LASKX3I"
+  album: "Против царя"
+  year: 2021
+  playlist: post-soviet-nation
+  cover: sp-0DvM6OhAMflNe8RqtPpnie.jpg
+  # spotify: 0DvM6OhAMflNe8RqtPpnie
+  youtube: [rL4JVZ3_uRY, ojvXvIQ26RI]
+
+- title: "Кончится лето"
+  artist: "Кино"
+  album: "Чёрный альбом"
+  year: 1990
+  playlist: post-soviet-nation
+  cover: sp-5d7O0hwpi92wfOdXIs9P1h.jpg
+  # spotify: 5d7O0hwpi92wfOdXIs9P1h
+  # no Spotify aparece só como "Лето"
+  youtube: [iOvYGQtFBNM, 6VqiMQoMXmw]
+
+- title: "Tiroler Edelweiss"
+  artist: "Minenwerfer"
+  album: "Alpenpässe"
+  year: 2019
+  playlist: tudo-que-e-metal
+  cover: sp-7uAsm2JVmn7bYwkRK9ob8c.jpg
+  # spotify: 7uAsm2JVmn7bYwkRK9ob8c
+  # bloqueado fora do YouTube; nenhum upload liberado em 11 testados (out/2026)
+  youtube: w_TwJJjq6i0
+
+- title: "На Дне"
+  artist: "Molchat Doma"
+  album: "Этажи"
+  year: 2018
+  playlist: post-soviet-nation
+  cover: molchat-etazhi.jpg
+  # álbum inteiro; uploads não oficiais, duração conferida com o iTunes
+  youtube: [OE02yi3P7fA, zN14CiqHUXw, rPS1bTONSsw]
+
+- title: "Танцевать"
+  artist: "Molchat Doma"
+  album: "Этажи"
+  year: 2018
+  playlist: post-soviet-nation
+  cover: molchat-etazhi.jpg
+  # álbum inteiro; uploads não oficiais, duração conferida com o iTunes
+  youtube: [_kAftRIcy6Q, ygfhG7r57sk, ZKYeXzbBIws]
+
+- title: "Фильмы"
+  artist: "Molchat Doma"
+  album: "Этажи"
+  year: 2018
+  playlist: post-soviet-nation
+  cover: molchat-etazhi.jpg
+  # álbum inteiro; uploads não oficiais, duração conferida com o iTunes
+  youtube: [taqo7AhKQiQ, za4yIyImi7M, uiYmb1xkND4]
+
+- title: "Волны"
+  artist: "Molchat Doma"
+  album: "Этажи"
+  year: 2018
+  playlist: post-soviet-nation
+  cover: molchat-etazhi.jpg
+  # álbum inteiro; uploads não oficiais, duração conferida com o iTunes
+  youtube: oHG0HA2yb60
+
+- title: "Тоска"
+  artist: "Molchat Doma"
+  album: "Этажи"
+  year: 2018
+  playlist: post-soviet-nation
+  cover: molchat-etazhi.jpg
+  # álbum inteiro; uploads não oficiais, duração conferida com o iTunes
+  youtube: [Pw5G-qQyi9w, BpjkT3qcQ9w, 72M_WTDVBTg]
+
+- title: "Прогноз"
+  artist: "Molchat Doma"
+  album: "Этажи"
+  year: 2018
+  playlist: post-soviet-nation
+  cover: molchat-etazhi.jpg
+  # álbum inteiro; uploads não oficiais, duração conferida com o iTunes
+  youtube: [YEsnNec9eOc, P9QksTvRmV4, Bv2rNFUwF9o]
+
+- title: "Судно (Борис Рыжий)"
+  artist: "Molchat Doma"
+  album: "Этажи"
+  year: 2018
+  playlist: post-soviet-nation
+  cover: molchat-etazhi.jpg
+  # álbum inteiro; uploads não oficiais, duração conferida com o iTunes
+  youtube: [zQ9w2xOH1U8, XSl58-A-nEQ, 6KeEw0yp9_Q]
+
+- title: "Коммерсанты"
+  artist: "Molchat Doma"
+  album: "Этажи"
+  year: 2018
+  playlist: post-soviet-nation
+  cover: molchat-etazhi.jpg
+  # álbum inteiro; uploads não oficiais, duração conferida com o iTunes
+  youtube: [r5D8xnDcCro, dK_9FXhnjoQ, gtMZk-PQ7tc]
+
+- title: "Клетка"
+  artist: "Molchat Doma"
+  album: "Этажи"
+  year: 2018
+  playlist: post-soviet-nation
+  cover: molchat-etazhi.jpg
+  # álbum inteiro; uploads não oficiais, duração conferida com o iTunes
+  youtube: [NtPk22NWB5Y, uaKy9zureLc, -iovB10fJJk]
+
+- title: "Холодные стены"
+  artist: "Sizor"
+  album: "Холодные стены"
+  year: 2021
+  playlist: post-soviet-nation
+  cover: sp-4m3icBYaCwbJyAc2eCHkdc.jpg
+  # identificada pelo Spotify; NwUGbGmMQos é o upload do canal oficial SIZOR
+  youtube: [NwUGbGmMQos, 5RRwPU3-jfs, 0I5d4jPsZPk]
