@@ -1,12 +1,5 @@
 # kpital
 
-Arquivo pessoal: galeria de música à esquerda, artigos (computação,
-história, opinião) à direita.
-
-Site estático. Os artigos são escritos em Markdown (do jeito do Obsidian) e
-um gerador local transforma tudo em HTML. O GitHub Pages só serve o
-resultado: não tem build no servidor.
-
 ## Uso
 
 ```sh
