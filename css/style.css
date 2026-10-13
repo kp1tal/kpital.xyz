@@ -1094,26 +1094,3 @@ body.home .bottom {
     padding: 0.4rem 0.3rem;
   }
 }
-
-/* link de canto pro subsite fuckit (inferior esquerdo, fixo) */
-/* body > ... pra vencer a regra `body > :not(.overlay){position:relative}` */
-body > .corner-fuckit {
-  position: fixed;
-  left: clamp(0.75rem, 2vw, 1.5rem);
-  bottom: clamp(0.75rem, 2vw, 1.5rem);
-  z-index: 20;
-  font-family: var(--mono);
-  font-size: 0.8125rem;
-  color: var(--path);
-  text-decoration: none;
-  letter-spacing: 0.02em;
-  opacity: 0.75;
-  transition: color 0.2s, opacity 0.2s;
-}
-.corner-fuckit::before { content: "~/"; opacity: 0.6; }
-.corner-fuckit:hover,
-.corner-fuckit:focus-visible {
-  color: var(--wood-hi);
-  opacity: 1;
-  text-decoration: underline;
-}
