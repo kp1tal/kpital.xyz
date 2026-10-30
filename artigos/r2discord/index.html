@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>r2discord — Discord Rich Presence pro radare2 — kpital</title>
+<meta name="description" content="Um plugin simples que mostra no seu status do Discord o que você tá fazendo dentro do radare2.">
+<meta name="theme-color" content="#151a10">
+<link rel="canonical" href="https://kpital.xyz/artigos/r2discord/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="kpital">
+<meta property="og:title" content="r2discord — Discord Rich Presence pro radare2">
+<meta property="og:description" content="Um plugin simples que mostra no seu status do Discord o que você tá fazendo dentro do radare2.">
+<meta property="og:url" content="https://kpital.xyz/artigos/r2discord/">
+<meta property="og:image" content="https://kpital.xyz/img/og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="kpital">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="r2discord — Discord Rich Presence pro radare2">
+<meta name="twitter:description" content="Um plugin simples que mostra no seu status do Discord o que você tá fazendo dentro do radare2.">
+<meta name="twitter:image" content="https://kpital.xyz/img/og.jpg">
+<link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48 64x64">
+<link rel="icon" href="../../img/favicon.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+<link rel="preload" href="../../fonts/ComicShannsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/artigo.css">
+</head>
+<body class="reading">
+
+<div class="overlay"></div>
+
+<nav class="bar" aria-label="navegação">
+  <a class="back" href="../../">← kpital</a>
+  <span class="bar-path">artigos/r2discord</span>
+</nav>
+
+<main class="reader">
+  <article>
+    <header class="article-head">
+      <p class="article-meta"><span class="tag">computação</span> <time datetime="2026-10-30">2026-10-30</time> <span class="sep">/</span> 1 min</p>
+      <h1 class="article-h1">r2discord — Discord Rich Presence pro radare2</h1>
+      <p class="article-lede">Um plugin simples que mostra no seu status do Discord o que você tá fazendo dentro do radare2.</p>
+      <p class="article-author">por kpital</p>
+    </header>
+    
+
+    <div class="prose">
+<p>fala pessoal, aqui é o kpital! vim mostrar um plugin simples que eu fiz no tempo livre pro radare2.</p>
+<p>ele mostra o seu status atual do r2 direto no Discord. se você é do tipo que gosta de mostrar o que tá fazendo (ou só quer ver o &quot;Jogando radare2&quot; no perfil kkkk), pode usar essa bosta que eu criei.</p>
+<p>foi coisa rápida, feita ali com IA só pra postar mesmo. é uma contribuição simples, bem simples, mas ajuda!</p>
+<h2 id="como-fica"><a class="anchor" href="#como-fica" aria-hidden="true" tabindex="-1">#</a>Como fica</h2>
+<div class="table-wrap"><table><thead><tr><th>Prompt</th><th>Visual mode</th></tr></thead><tbody><tr><td><figure class="media"><img src="../../media/r2discord-prompt.png" alt="prompt" loading="lazy" decoding="async"><figcaption>prompt</figcaption></figure></td><td><figure class="media"><img src="../../media/r2discord-visual.png" alt="visual" loading="lazy" decoding="async"><figcaption>visual</figcaption></figure></td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>Debugging</th><th>Idle</th></tr></thead><tbody><tr><td><figure class="media"><img src="../../media/r2discord-debugging.png" alt="debugging" loading="lazy" decoding="async"><figcaption>debugging</figcaption></figure></td><td><figure class="media"><img src="../../media/r2discord-idle.png" alt="idle" loading="lazy" decoding="async"><figcaption>idle</figcaption></figure></td></tr></tbody></table></div>
+<div class="callout callout-note">
+<div class="callout-title"><span class="callout-mark" aria-hidden="true">[i]</span> <span class="callout-title-text">Note</span></div>
+<div class="callout-body"><p>Por padrão ele é privado: nome de arquivo e de função só aparecem se você rodar <code>e discord.showname=true</code>.</p>
+</div>
+</div><h2 id="instalar"><a class="anchor" href="#instalar" aria-hidden="true" tabindex="-1">#</a>Instalar</h2>
+<p>O plugin já tá no banco de dados do próprio r2pm (o gerenciador de pacotes do radare2), então não precisa adicionar repositório nenhum. Se você tem o radare2 e o r2pm, já tá pronto:</p>
+<div class="code"><span class="code-lang">bash</span><button class="code-copy" type="button" hidden>copiar</button><pre><code class="hljs language-bash">r2pm -U
+r2pm -ci r2discord</code></pre></div>
+<p>Reinicia o r2. O status começa depois do primeiro comando que você rodar, e o comando <code>discord</code> mostra o estado da conexão.</p>
+<h2 id="repositorio"><a class="anchor" href="#repositorio" aria-hidden="true" tabindex="-1">#</a>Repositório</h2>
+<p>O código, o build na mão e as opções de configuração tão aqui:</p>
+<p><a href="https://github.com/kp1tal/r2discord" rel="noopener">github.com/kp1tal/r2discord</a></p>
+<p>se tiver sugestão, manda um e-mail pra <a href="mailto:kp1tal@disroot.org">kp1tal@disroot.org</a> que eu vou implementando. é isso, espero que goste!</p>
+
+    </div>
+
+    <footer class="article-foot">
+      <p class="article-tags"><span class="tag">radare2</span> <span class="tag">discord</span> <span class="tag">plugin</span> <span class="tag">r2pm</span> <span class="tag">reversing</span></p>
+      <nav class="article-nav" aria-label="outros artigos">
+        <span></span>
+        <a class="nav-older" href="../../artigos/be-stealth-reverse-shell/">
+      <span class="nav-dir">mais antigo →</span>
+      <span class="nav-title">Be Stealth on reverse-shell</span>
+    </a>
+      </nav>
+      <a class="back back-bottom" href="../../">← voltar pro início</a>
+    </footer>
+  </article>
+</main>
+
+<footer class="bottom">
+  <p><span class="path">~/kpital $</span> fuck-it since 2019<span class="cursor" aria-hidden="true">_</span></p>
+</footer>
+
+<script src="../../js/artigo.js" defer></script>
+</body>
+</html>
